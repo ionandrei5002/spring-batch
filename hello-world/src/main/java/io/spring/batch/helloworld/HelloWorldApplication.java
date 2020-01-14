@@ -18,11 +18,14 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class HelloWorldApplication {
 
-    @Autowired
-    private JobBuilderFactory jobBuilderFactory;
+    private final JobBuilderFactory jobBuilderFactory;
 
-    @Autowired
-    private StepBuilderFactory stepBuilderFactory;
+    private final StepBuilderFactory stepBuilderFactory;
+
+    public HelloWorldApplication(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory) {
+        this.jobBuilderFactory = jobBuilderFactory;
+        this.stepBuilderFactory = stepBuilderFactory;
+    }
 
     @Bean
     public Step step() {
