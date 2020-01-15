@@ -9,6 +9,7 @@ import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.CompositeJobParametersValidator;
 import org.springframework.batch.core.job.DefaultJobParametersValidator;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.listener.JobListenerFactoryBean;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,14 +53,19 @@ public class Chapter04Application {
         return this.jobBuilderFactory.get("basicJob")
                 .start(step1())
                 .validator(validator())
-                .incrementer(new DailyJobTimestamper())
+                .incrementer(new DailyJobTimestamperImpl())
+//                .listener(new JobLoggerListenerImpl())
+                .listener(JobListenerFactoryBean.getListener(
+                        new JobLoggerListener()
+                ))
                 .build();
     }
 
     @Bean
     public Step step1() {
         return this.stepBuilderFactory.get("step1")
-                .tasklet(helloWorldTasklet(null, null))
+//                .tasklet(helloWorldTasklet(null, null))
+                .tasklet(new HelloWorldImpl())
                 .build();
     }
 

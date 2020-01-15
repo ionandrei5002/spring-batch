@@ -6,7 +6,7 @@ import org.springframework.batch.core.JobParametersIncrementer;
 
 import java.util.Date;
 
-public class DailyJobTimestamper implements JobParametersIncrementer {
+public class DailyJobTimestamperImpl implements JobParametersIncrementer {
     @Override
     public JobParameters getNext(JobParameters jobParameters) {
         return new JobParametersBuilder(jobParameters)
